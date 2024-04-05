@@ -20,21 +20,21 @@ def gzip(path):
 def xz(path)  :
     os.system(f"tar --xz -cf    archives/{ARCH_NAME}.tar.xz {path}")
 
+CMDS = [zip, seven_zip, rar, gzip, xz]
 
-def main(commands, path):
+def main(path):
     results = {}
 
     if not os.path.exists("archives"):
         os.mkdir("archives")
 
-    for cmd in commands:
+    for cmd in CMDS:
         results[str(cmd).split(" ")[1]] = timeit.timeit(lambda: cmd(path),
                                                         number=1)
-    print(results)
+    return results
 
 
 if __name__ == "__main__":
-    CMDS = [zip, seven_zip, rar, bzip, gzip, xz]
     PATH = "/home/logan/Downloads"
 
-    main(CMDS, PATH)
+    print(main(PATH))
